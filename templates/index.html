@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page_title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+    --ink:#1B2A4A; --ink-light:#2E4270; --paper:#FAF6EC; --paper-card:#FFFDF6;
+    --gold:#A9822F; --gold-soft:#D8C48F; --seal:#7A2E2E;
+    --text:#2B2620; --text-muted:#6E6656;
+}
+*{box-sizing:border-box;}
+body{
+    margin:0; min-height:100vh;
+    background:
+        repeating-linear-gradient(180deg, rgba(169,130,47,0.035) 0px, rgba(169,130,47,0.035) 1px, transparent 1px, transparent 34px),
+        var(--paper);
+    font-family:'Source Serif 4', Georgia, serif;
+    color:var(--text);
+}
+.wrap{ max-width:760px; margin:0 auto; padding:24px 18px 40px; }
+.masthead{ text-align:center; padding:8px 0 22px 0; margin-bottom:18px; border-bottom:3px double var(--gold); }
+.eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:3px; color:var(--seal); text-transform:uppercase; margin-bottom:6px; }
+.title{ font-family:'Playfair Display', Georgia, serif; font-weight:700; font-size:2.1rem; color:var(--ink); margin:0; display:flex; align-items:center; justify-content:center; gap:12px; }
+.seal{ display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #8f3939, var(--seal) 70%); color:var(--gold-soft); font-size:20px; box-shadow:0 0 0 2px var(--gold-soft), inset 0 0 6px rgba(0,0,0,.35); }
+.subtitle{ font-style:italic; color:var(--text-muted); font-size:.95rem; margin-top:8px; }
+
+.info-box{ background:rgba(216,196,143,.15); border:1px solid var(--gold-soft); border-radius:4px; padding:10px 14px; font-size:.88rem; color:var(--text-muted); margin-bottom:18px; display:flex; gap:8px; align-items:flex-start;}
+
+.error-box{ background:#fbeaea; border:1px solid var(--seal); color:var(--seal); border-radius:4px; padding:12px 14px; margin-bottom:18px; font-size:.9rem; }
+
+#chat{ display:flex; flex-direction:column; gap:12px; margin-bottom:90px; }
+.msg{ border:1px solid var(--gold-soft); background:var(--paper-card); border-radius:8px; padding:12px 16px; box-shadow:0 1px 3px rgba(43,38,32,.06); max-width:100%; white-space:pre-wrap; line-height:1.5; }
+.msg.user{ align-self:flex-end; background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.msg.assistant{ align-self:flex-start; }
+.msg.assistant::before{ content:"⚖️ "; }
+.msg.user::before{ content:"🧑 "; }
+.msg.loading{ color:var(--text-muted); font-style:italic; }
+
+.sources{ margin-top:10px; }
+.sources summary{ font-family:'IBM Plex Mono', monospace; font-size:.8rem; color:var(--ink); cursor:pointer; }
+.source-card{ border:1px solid var(--gold-soft); background:#fff; border-radius:4px; padding:10px 12px; margin-top:8px; }
+.badge{ display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; color:var(--seal); background:#fff; border:1px solid var(--seal); border-radius:999px; padding:2px 10px 2px 5px; margin-bottom:6px; }
+.dot{ width:7px; height:7px; border-radius:50%; background:var(--seal); }
+.source-text{ font-size:.85rem; color:var(--text-muted); line-height:1.45; }
+
+form#chat-form{ position:fixed; bottom:0; left:0; right:0; background:linear-gradient(0deg, var(--paper) 60%, transparent); padding:18px 16px 20px; display:flex; justify-content:center; }
+.input-row{ width:100%; max-width:760px; display:flex; gap:8px; border:1px solid var(--gold); border-radius:8px; background:var(--paper-card); padding:6px; }
+#question{ flex:1; border:none; outline:none; background:transparent; font-family:'Source Serif 4', Georgia, serif; font-size:1rem; padding:8px 10px; color:var(--text); }
+button.send{ font-family:'IBM Plex Mono', monospace; letter-spacing:.5px; background:var(--ink); color:var(--paper); border:1px solid var(--ink); border-radius:6px; padding:0 18px; cursor:pointer; transition:all .15s ease; }
+button.send:hover{ background:var(--seal); border-color:var(--seal); }
+button.send:disabled{ opacity:.5; cursor:not-allowed; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="masthead">
+        <div class="eyebrow">4857 Sayılı Türk İş Kanunu &nbsp;·&nbsp; Kaynak Gösteren Yapay Zekâ</div>
+        <div class="title"><span class="seal">{{ page_icon }}</span> İş Kanunu RAG Asistanı</div>
+        <div class="subtitle">Sorunuzu sorun — cevap, ilgili kanun maddelerine dayandırılır ve kaynağıyla gösterilir.</div>
+    </div>
+
+    <div class="info-box">ℹ️ Bu asistan yalnızca 4857 Sayılı İş Kanunu metnine dayanarak genel bilgilendirme amaçlı cevaplar üretir. Hukuki bağlayıcılığı yoktur; önemli kararlar için bir avukata danışınız.</div>
+
+    {% if init_error %}
+    <div class="error-box">{{ init_error }}</div>
+    {% endif %}
+
+    <div id="chat"></div>
+
+    <form id="chat-form">
+        <div class="input-row">
+            <input id="question" type="text" placeholder="Sorunuzu buraya yazın..." autocomplete="off" {% if init_error %}disabled{% endif %} />
+            <button class="send" type="submit" {% if init_error %}disabled{% endif %}>Gönder</button>
+        </div>
+    </form>
+</div>
+
+<script>
+const chatEl = document.getElementById('chat');
+const form = document.getElementById('chat-form');
+const input = document.getElementById('question');
+const sendBtn = form.querySelector('button.send');
+
+function escapeHtml(str){
+    const d = document.createElement('div');
+    d.innerText = str;
+    return d.innerHTML;
+}
+
+function addMessage(role, text){
+    const div = document.createElement('div');
+    div.className = 'msg ' + role;
+    div.innerText = text;
+    chatEl.appendChild(div);
+    window.scrollTo(0, document.body.scrollHeight);
+    return div;
+}
+
+function renderSources(container, sources){
+    if(!sources || sources.length === 0) return;
+    const details = document.createElement('details');
+    details.className = 'sources';
+    const summary = document.createElement('summary');
+    summary.innerText = '📚 Kullanılan Kanun Maddeleri (' + sources.length + ')';
+    details.appendChild(summary);
+    sources.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'source-card';
+        card.innerHTML = `<div class="badge"><span class="dot"></span>${escapeHtml(s.law_name)} — ${escapeHtml(s.article)}</div><div class="source-text">${escapeHtml(s.content)}</div>`;
+        details.appendChild(card);
+    });
+    container.appendChild(details);
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if(!q) return;
+
+    addMessage('user', q);
+    input.value = '';
+    sendBtn.disabled = true;
+
+    const loadingEl = addMessage('assistant loading', 'Yanıt hazırlanıyor...');
+
+    try{
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({question: q})
+        });
+        const data = await res.json();
+        loadingEl.classList.remove('loading');
+
+        if(!res.ok){
+            loadingEl.innerText = data.error || 'Bir hata oluştu.';
+        } else {
+            loadingEl.innerText = data.answer;
+            renderSources(loadingEl, data.sources);
+        }
+    } catch(err){
+        loadingEl.classList.remove('loading');
+        loadingEl.innerText = 'Sunucuya ulaşılamadı. Lütfen tekrar deneyin.';
+    } finally {
+        sendBtn.disabled = false;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+});
+</script>
+</body>
+</html>
