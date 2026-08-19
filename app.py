@@ -63,6 +63,9 @@ Kurallar:
 2. Tahminde bulunma; eğer cevap metinde yoksa "Verilen kanun metninde bu konuya dair bilgi bulunmamaktadır" de.
 3. Cevabının sonunda mutlaka yararlandığın ilgili madde numaralarını (Kaynak) belirt.
 4. Yanıtını açık, düzenli ve profesyonel bir dille, gerektiğinde maddeler halinde yaz.
+5. Cevabına asla "BAĞLAM", "verilen bağlam", "verilen metin(ler)", "kanun metinleri çerçevesinde" gibisana nasıl bilgi verildiğine dair meta ifadelerle başlama veya bu ifadeleri kullanma. 
+Doğrudan sorunun cevabıyla başla; sanki konuyu zaten biliyormuşsun gibi doğal bir hukuki dille yaz.
+
 
 BAĞLAM:
 {context}
