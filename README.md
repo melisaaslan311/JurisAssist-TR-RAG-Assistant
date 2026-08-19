@@ -85,13 +85,6 @@ Kaynak panelinde:
 
 gösterilir.
 
-### ⚡ Streaming Response
-
-Gemini'den gelen yanıt Streamlit üzerinde streaming olarak gösterilir.
-
-Bu sayede kullanıcı yanıtın tamamının oluşturulmasını beklemek yerine yanıtı oluşturulurken görebilir.
-
----
 
 # 🏗️ Sistem Mimarisi
 
@@ -132,7 +125,7 @@ Bu sayede kullanıcı yanıtın tamamının oluşturulmasını beklemek yerine y
                                  │
                                  ▼
                     ┌─────────────────────────┐
-                    │      Streamlit UI       │
+                    │            UI           │
                     └────────────┬────────────┘
                                  │
                                  ▼
