@@ -1,9 +1,3 @@
-# %%
-import sys
-project_root = r"C:\Users\melis\OneDrive\Masaüstü\legal-research-assistant"
-if project_root not in sys.path:
-    sys.path.append(project_root)
-    
 from embeddings.embedding import embedding
 from chunker.chunker import chunks
 test_embedding = embedding.embed_query(
@@ -12,9 +6,7 @@ test_embedding = embedding.embed_query(
 
 print(len(test_embedding))
 
-# %%
 import os
-
 from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
 
