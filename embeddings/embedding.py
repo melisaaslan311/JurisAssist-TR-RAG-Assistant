@@ -2,7 +2,6 @@ import os
 import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# Hugging Face indirme kararlılığı ayarları
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -14,5 +13,4 @@ def get_embedding():
         encode_kwargs={"normalize_embeddings": True}
     )
 
-# Geriye dönük uyumluluk için
 embedding = get_embedding()
