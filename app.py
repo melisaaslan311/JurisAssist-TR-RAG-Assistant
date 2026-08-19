@@ -1,23 +1,3 @@
-"""
-İş Kanunu RAG Asistanı
-=======================
-4857 Sayılı Türk İş Kanunu üzerinde RAG (Retrieval-Augmented Generation)
-tabanlı soru-cevap sağlayan Streamlit uygulaması.
-
-Çalıştırmak için:
-    streamlit run app.py
-
-Gerekli ortam değişkenleri (.env):
-    QDRANT_URL
-    QDRANT_API_KEY
-    GOOGLE_API_KEY
-    GEMINI_MODEL (opsiyonel, varsayılan: gemini-3.6-flash)
-"""
-import os
-# HuggingFace'in her seferinde internete bağlanıp versiyon kontrolü yapmasını engeller
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
-
 import html
 import logging
 import os
