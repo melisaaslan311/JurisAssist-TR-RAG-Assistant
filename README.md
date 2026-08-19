@@ -8,6 +8,7 @@
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/)
 
 **Turkish Labor Law AI Assistant**, 4857 Sayılı Türk İş Kanunu metinleri üzerinde yüksek doğrulukla anlamsal arama (semantic search) yaparak kullanıcılara madde dayanaklı hukuki yanıtlar üreten **RAG (Retrieval-Augmented Generation)** tabanlı bir yapay zeka asistanıdır.
+https://juris-assist-rag-assistant.streamlit.app/
 
 ---
 
