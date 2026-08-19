@@ -15,8 +15,6 @@ Gerekli ortam değişkenleri (.env):
 """
 import os
 # HuggingFace'in her seferinde internete bağlanıp versiyon kontrolü yapmasını engeller
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 import html
 import logging
